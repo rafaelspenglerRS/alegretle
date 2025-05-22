@@ -67,7 +67,7 @@ function gerarTextoCompartilhavel() {
     const diaFormatado = dataDeHoje.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
     const nomeDoJogo = "Alegretle"; // Nome do seu jogo
 
-    let texto = `${nomeDoJogo} - ${targetMunicipalityDisplayName} - ${diaFormatado}\n`;
+    let texto = `${nomeDoJogo} - ${diaFormatado}\n`;
     texto += `Resultado em ${guessedMunicipalities.length} tentativa(s):\n\n`;
 
     // Mapeamento simplificado de cores para emojis de quadrados
