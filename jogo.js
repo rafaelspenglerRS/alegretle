@@ -17,7 +17,7 @@ const PROXIMITY_COLORS = [
     { limit: 50000, color: '#FFBF00', label: 'Perto' },        // Laranja Claro/Amarelo Escuro
     { limit: 100000, color: '#FF7F00', label: 'Meio Longe' },  // Laranja
     { limit: 200000, color: '#FF4000', label: 'Longe' },       // Vermelho Claro
-    { limit: Infinity, color: '#FF0000', label: 'Muito Longe!' } // Vermelho
+    { limit: Infinity, color: '#8b0000 ', label: 'Muito Longe!' } // Vermelho
 ];
 
 // Funções Utilitárias
@@ -67,8 +67,8 @@ function gerarTextoCompartilhavel() {
     const diaFormatado = dataDeHoje.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
     const nomeDoJogo = "Alegretle"; // Nome do seu jogo
 
-    let texto = `${nomeDoJogo} - ${diaFormatado}\n`;
-    texto += `Resultado em ${guessedMunicipalities.length} tentativa(s):\n\n`;
+    let texto = `Correto! \n${nomeDoJogo} - ${diaFormatado}\n`;
+    texto += `- Resultado em ${guessedMunicipalities.length} tentativa(s):\n\n`;
 
     // Mapeamento simplificado de cores para emojis de quadrados
     const emojiMap = {
@@ -276,7 +276,7 @@ function handleGuessInput() {
     guessInput.focus();
 
     if (palpiteNormalizado === targetMunicipality) {
-        alert(`Parabéns! Você acertou! O município era ${targetMunicipalityDisplayName}.`);
+       // alert(`Parabéns! Você acertou! O município era ${targetMunicipalityDisplayName}.`);
         guessInput.disabled = true;
         document.getElementById('guess-button').disabled = true;
         guessedLayer.setStyle({ fillColor: proximityFeedback.color, color: 'gold', weight: 3, fillOpacity: 0.75, opacity: 1 });
