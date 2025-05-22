@@ -1,4 +1,4 @@
-/* estilos.css - Versão Atualizada */
+/* estilos.css - Versão Atualizada com Melhor Uso Horizontal */
 
 /* Estilos Globais */
 body {
@@ -16,57 +16,63 @@ body {
 
 /* Cabeçalho e Título */
 h1 {
-    color: #2c3e50;
+    color: #048042;  /* Cor padrão se não estiver usando spans coloridos */
     margin-bottom: 25px;
-    font-size: 2.5em;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    font-size: 2.8em; /* Ajustado para o título "alegretle" */
+    text-align: center; /* Centraliza o título */
 }
+
+/* Estilos para o título "alegretle" com spans coloridos */
+h1 .titulo-cor1 { color: #048042; }
+h1 .titulo-cor2 { color: #C2374B; }
+h1 .titulo-cor3 { color: #FEC75F; }
+
 
 /* Contenedor do Mapa */
 #map {
     width: 85%;
-    max-width: 900px; /* Mantido, mas o contêiner abaixo pode ser mais largo */
+    max-width: 900px;
     height: 500px;
     margin-bottom: 25px;
     border: 2px solid #a9cce3;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 6px #048042; 
 }
 
-/* --- Novo Layout para Controles e Lista de Tentativas --- */
+/* Layout para Controles e Lista de Tentativas (Lado a Lado) */
 #controls-and-guesses-container {
     display: flex;
-    flex-direction: row; /* Lado a lado */
+    flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
-    width: 85%;
-    max-width: 1000px; /* Aumentado para acomodar o layout lado a lado */
-    gap: 25px; /* Espaço entre as duas colunas */
-    margin: 0 auto 30px auto; /* Centraliza e adiciona margem inferior */
+    width: 85%; /* Aumentado para melhor uso horizontal */
+    max-width: 850px; /* Aumentado para melhor uso horizontal */
+    gap: 25px;
+    margin: 0 auto 30px auto;
+    flex-grow: 1; /* Para ocupar espaço vertical */
 }
 
 /* Controles do Jogo (Input e Botões) - Coluna da Esquerda */
 #game-controls {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; 
     gap: 15px;
     padding: 20px;
     background-color: #ffffff;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    
-    flex: 1 1 38%; /* Ajuste a proporção conforme necessário (ex: 38% para esta coluna) */
-    width: auto; /* Deixa o flex controlar */
-    max-width: none; /* Remove max-width anterior */
-    margin-bottom: 0; /* Removido, pois o gap do pai controla */
+    box-shadow: 0 2px 8px #048042;
+    flex: 1 1 25%; /* Proporção da coluna */
+    width: auto;
+    max-width: none;
+    margin-bottom: 0;
 }
 
 #guess-input {
     padding: 12px 15px;
     font-size: 1em;
-    width: 100%; /* Ocupa a largura do #game-controls */
-    max-width: 300px; /* Mantém um limite razoável para o input */
+    width: 100%; /* Ocupa a largura da coluna #game-controls */
+    max-width: 350px; /* Limite para não ficar excessivamente largo; será centralizado se a coluna for maior */
     border: 1px solid #ccc;
     border-radius: 6px;
     box-sizing: border-box;
@@ -76,18 +82,19 @@ h1 {
 #guess-input:focus {
     border-color: #3498db;
     outline: none;
-    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+    box-shadow: 0 0 5px #048042;
 }
 
+/* Estilo base para todos os botões */
 button {
-    padding: 12px 25px;
+    padding: 12px 20px; /* Ajustado o padding lateral */
     font-size: 1em;
     font-weight: bold;
     border-radius: 6px;
     border: none;
     cursor: pointer;
     transition: background-color 0.2s ease, transform 0.1s ease;
-    min-width: 150px;
+    box-sizing: border-box; /* Inclui padding e borda na largura/altura total */
 }
 
 button:hover {
@@ -99,8 +106,16 @@ button:active {
     transform: translateY(0px);
 }
 
-#guess-button {
-    background-color: #FEC75F;
+/* Botões específicos dentro de #game-controls */
+#game-controls #guess-button,
+#game-controls #new-game-button {
+    width: 100%; /* Ocupam a largura da coluna #game-controls */
+    max-width: 350px; /* Mesmo max-width do input para consistência; serão centralizados */
+    /* min-width: 150px; -- Removido, pois width e max-width controlam melhor */
+}
+
+#guess-button { /* Este é o ID, então a regra acima já se aplica se for filho de #game-controls */
+    background-color: #048042;
     color: white;
 }
 
@@ -108,7 +123,7 @@ button:active {
     background-color: #27ae60;
 }
 
-#new-game-button {
+#new-game-button { /* Este é o ID, regra acima já se aplica se for filho de #game-controls */
     background-color: #3498db;
     color: white;
 }
@@ -119,74 +134,97 @@ button:active {
 
 /* Área da Lista de Tentativas (Título + Lista) - Coluna da Direita */
 #guesses-area {
-    flex: 1 1 58%; /* Ajuste a proporção conforme necessário (ex: 58% para esta coluna) */
+    flex: 1 1 50%; /* Proporção da coluna */
     display: flex;
     flex-direction: column;
-    /* Os estilos de caixa como background, border-radius, podem vir de #guesses-list abaixo */
+    flex-grow: 1; /* Para ocupar espaço vertical */
 }
 
 #guesses-area h3 { /* Título "Tentativas:" */
-    color: #2c3e50;
-    margin-top: 0; /* Remove margem do topo, pois está dentro de #guesses-area */
+    color: #048042;
+    margin-top: 0;
     margin-bottom: 10px;
     text-align: center;
 }
 
-/* Lista de Tentativas em si (com as "tags" e rolagem) */
+/* Contêiner da Lista de Tentativas (UL) */
 #guesses-list {
     list-style-type: none;
     padding: 10px;
-    width: 100%; /* Ocupa toda a largura de #guesses-area */
-    margin-bottom: 0; /* Removido, pois o gap do pai maior controla */
+    width: 100%;
+    margin-bottom: 0;
     background-color: #e9ecef;
     border-radius: 8px;
     box-shadow: inset 0 1px 4px rgba(0,0,0,0.08);
-
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-
-    max-height: 220px; /* Altura máxima antes da rolagem */
+    max-height: 500px;  /* Aumentado para mostrar mais tentativas (era 250px) */
     overflow-y: auto;
     overflow-x: hidden;
+    flex-grow: 1; /* Para ocupar espaço vertical dentro de #guesses-area */
 }
 
+/* Estilos para os ITENS da Lista de Tentativas (LI) */
 #guesses-list li {
-    padding: 8px 15px;
-    border-radius: 20px; /* "Tags" ou "Pílulas" */
-    font-size: 0.9em;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 12px 18px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
     line-height: 1.4;
-    text-align: center;
-    /* Cor de fundo e texto são definidas pelo JavaScript */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    width: auto;
 }
 
-#guesses-list li b {
-    color: inherit; /* Garante que o <b> herde a cor definida no <li> */
+#guesses-list li:hover {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+#guesses-list li .guess-municipality {
+    font-weight: 700;
+    font-size: 1.00em;
+}
+
+#guesses-list li .guess-feedback {
+    font-weight: 500;
+    font-size: 0.90em;
+}
+
+#guesses-list li .guess-distance {
+    font-size: 0.85em;
+    opacity: 0.8;
 }
 
 
 /* Ajustes de Responsividade */
-@media (max-width: 800px) { /* Ponto de quebra para o layout lado a lado */
+@media (max-width: 800px) {
     #controls-and-guesses-container {
-        flex-direction: column; /* Empilha as colunas */
+        flex-direction: column;
         align-items: center;
-        width: 90%; /* Ajusta a largura do contêiner principal */
-        gap: 0; /* Remove o gap lateral, pois agora é vertical */
+        width: 90%;
+        gap: 0;
     }
 
     #game-controls,
     #guesses-area {
-        flex-basis: auto; /* Reseta o flex-basis */
-        width: 100%;     /* Cada seção ocupa a largura total do contêiner pai quando empilhada */
-        /* max-width: 500px;  Opcional: definir um max-width para as seções empilhadas */
+        flex-basis: auto;
+        width: 100%;
     }
 
     #game-controls {
-        margin-bottom: 20px; /* Adiciona espaço abaixo dos controles quando empilhado */
+        margin-bottom: 20px;
     }
 
-    /* Outros ajustes de responsividade que já tínhamos */
+    #game-controls #guess-input,
+    #game-controls button {
+        max-width: 400px; /* Aumenta um pouco o max-width em telas médias/pequenas */
+    }
+
+
     h1 {
         font-size: 2em;
     }
@@ -194,15 +232,6 @@ button:active {
     #map {
         width: 95%;
         height: 400px;
-    }
-
-    #guess-input {
-        font-size: 0.95em;
-    }
-
-    button {
-        padding: 10px 20px;
-        font-size: 0.95em;
     }
 }
 
@@ -215,20 +244,94 @@ button:active {
         height: 350px;
     }
 
-    #game-controls { /* Aqui #game-controls ainda está dentro de #controls-and-guesses-container */
+    #game-controls {
         padding: 15px;
     }
     
-    #guess-input, button {
+    #game-controls #guess-input,
+    #game-controls button {
         font-size: 0.9em;
+        max-width: none; /* Permite que ocupem 100% da coluna #game-controls que já é estreita */
     }
 
     #guesses-list {
-        max-height: 180px; /* Altura um pouco menor para a lista de tentativas em telas muito pequenas */
+        max-height: 150px;
+        gap: 8px;
     }
 
     #guesses-list li {
-        font-size: 0.85em; /* Fonte menor para as tags */
-        padding: 6px 10px;
+        font-size: 0.85em;
+        padding: 10px 15px;
+        gap: 3px;
     }
+
+     #guesses-list li .guess-municipality {
+        font-size: 1em;
+    }
+
+    #guesses-list li .guess-feedback {
+        font-size: 0.9em;
+    }
+
+    #guesses-list li .guess-distance {
+        font-size: 0.8em;
+    }
+}
+
+/* Em estilo.css */
+
+/* ... (todos os seus estilos existentes) ... */
+
+/* Estilos para o Contêiner de Sugestões de Autocompletar */
+/* ===== ESTILOS TEMPORÁRIOS PARA DEPURAÇÃO DO AUTOCOMPLETAR ===== */
+/* (Lembre-se de remover ou comentar estes estilos após a depuração) */
+
+#suggestions-container {
+    position: relative;
+    width: 100%;
+    max-width: 350px; /* Mesma largura máxima do input */
+    margin: 5px auto 0 auto; /* Pequena margem no topo, centraliza */
+}
+
+#suggestions-list-autocomplete {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    background-color: #ffffff; /* Fundo branco sólido */
+    border: 1px solid #d1d5db; /* Borda cinza mais suave */
+    border-top: none;
+    border-radius: 0 0 8px 8px; /* Cantos mais arredondados */
+    width: 100%;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1); /* Sombra mais pronunciada */
+    z-index: 1000;
+    max-height: 220px; /* Altura um pouco maior */
+    overflow-y: auto;
+    display: none; /* Começa escondido */
+}
+
+#suggestions-list-autocomplete li {
+    padding: 12px 18px; /* Mais padding interno */
+    cursor: pointer;
+    border-bottom: 1px solid #e5e7eb; /* Separador mais suave */
+    font-size: 0.98em; /* Fonte um pouco maior */
+    color: #374151; /* Cor de texto cinza escuro */
+    transition: background-color 0.15s ease-in-out; /* Transição suave no hover */
+}
+
+#suggestions-list-autocomplete li:last-child {
+    border-bottom: none;
+}
+
+/* Estado de Hover e Ativo (selecionado pelo teclado) */
+#suggestions-list-autocomplete li:hover,
+#suggestions-list-autocomplete li.suggestion-active {
+    background-color: #eef2ff; /* Azul bem claro para hover/ativo */
+    color: #048041; /* Cor de texto mais escura para contraste no hover/ativo */
+}
+
+/* Realce do texto digitado */
+#suggestions-list-autocomplete li strong {
+    font-weight: 700; /* Mais forte */
+    color: #048041; /* Roxo/Azul vibrante para o realce */
 }
