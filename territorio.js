@@ -52,71 +52,7 @@ function loadGeoJSON(geojsonSource, nameProperty, targetLayer) {
             onEachFeature: function (feature, layer) {
                 let nome = feature.properties[nameProperty] || "Desconhecido";
 
-                layer.on({
-                    mouseover: (e) => {
-                        const currentLayer = e.target;
-                        if (window.selectedTerritoryLayer !== currentLayer) {
-                            currentLayer.setStyle({ weight: 1.5, color: '#333', fillOpacity: 0.6, fillColor: '#CDDBC7' });
-                        }
-                        if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-                            currentLayer.bringToFront();
-                        }
-                        
-                        // CORREÇÃO AQUI para mouseover:
-                        // 1. Garanta que o tooltip esteja vinculado.
-                        // Se já estiver vinculado, o Leaflet geralmente lida bem com um novo bind, 
-                        // ou podemos apenas definir o conteúdo se ele já existir.
-                        if (!currentLayer.getTooltip()) { // Verifica se já existe um tooltip vinculado
-                            // currentLayer.bindTooltip(nome);
-                        } else {
-                            // Se já existe, apenas atualiza o conteúdo caso o 'nome' possa mudar (improvável aqui)
-                            // currentLayer.setTooltipContent(nome); // Descomente se 'nome' puder mudar dinamicamente para a mesma camada
-                        }
-                        
-                        // 2. Agora que temos certeza que um tooltip está vinculado, podemos abri-lo.
-                        // Chamar openTooltip() em um tooltip já aberto é seguro e garante que ele esteja visível.
-                        currentLayer.openTooltip(); 
-                    },
-                    mouseout: (e) => {
-                        const currentLayer = e.target;
-                        if (window.selectedTerritoryLayer !== currentLayer) {
-                            try {
-                                if (typeof window.DEFAULT_TERRITORY_STYLE !== 'undefined') {
-                                    currentLayer.setStyle(window.DEFAULT_TERRITORY_STYLE);
-                                } else { 
-                                    currentLayer.setStyle({ color: '#555', weight: 1, opacity: 0.2, fillColor: '#FFF3E4', fillOpacity: 0.4 });
-                                }
-                            } catch (resetError) {
-                                console.warn("[territorio.js] Erro ao resetar estilo (mouseout):", resetError);
-                            }
-                        }
-                        
-                        // CORREÇÃO AQUI para mouseout:
-                        // Verifica se a camada TEM um tooltip E se ele ESTÁ aberto antes de tentar fechar.
-                        if (currentLayer.getTooltip() && currentLayer.isTooltipOpen()) {
-                           currentLayer.closeTooltip();
-                        }
-                    },
-                    click: (e) => {
-                        const clickedLayer = e.target;
-                        if (typeof window.handleTerritorySelection === "function") {
-                            window.handleTerritorySelection(clickedLayer, { maxZoom: 11, padding: [25, 25], duration: 0.5 });
-                        } else {
-                            console.error("[territorio.js] Função window.handleTerritorySelection não encontrada!");
-                            // Fallback simples (não ideal, pois duplica lógica e pode não ter os estilos corretos)
-                            if (window.selectedTerritoryLayer && window.selectedTerritoryLayer !== clickedLayer) {
-                                try { window.selectedTerritoryLayer.setStyle(window.DEFAULT_TERRITORY_STYLE || {color: '#555'}); } catch(err) {}
-                            }
-                            try { clickedLayer.setStyle(window.SELECTED_TERRITORY_STYLE || {color: 'green', weight:2 }); } catch(err) {}
-                            window.selectedTerritoryLayer = clickedLayer;
-                            if (window.map) {
-                                window.map.fitBounds(clickedLayer.getBounds());
-                                let nomePopup = clickedLayer.feature?.properties?.[nameProperty] || "Desconhecido";
-                                L.popup().setLatLng(e.latlng).setContent("<b>" + nomePopup + "</b>").openOn(window.map);
-                            }
-                        }
-                    } 
-                });
+                
             }
         }); 
 
