@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>alegretle</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <link rel="stylesheet" href="estilos.css">
+    <style>
+        /* Estilos básicos para começar */
+        body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; margin: 0; height: 100vh; background-color: #f0f0f0; }
+        #map { width: 80%; height: 500px; margin-bottom: 20px; border: 1px solid #ccc; }
+        #game-controls { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; }
+        #guess-input { padding: 10px; font-size: 16px; width: 250px; margin-bottom: 10px; }
+        #guesses-list { list-style-type: none; padding: 0; width: 300px; text-align: left; }
+        #guesses-list li { background-color: #fff; margin-bottom: 5px; padding: 8px; border-radius: 4px; border: 1px solid #ddd; }
+        .hint-arrow { display: inline-block; margin-left: 10px; }
+    </style>
+</head>
+<body>
+    <h1 style="font-size: 2.8em; text-align: center; margin-bottom: 20px;">
+        <span style="color: #048042;">ale</span><span style="color: #C2374B;">gre</span><span style="color: #FEC75F;">tle</span>
+    </h1>
+
+    <div id="map"></div>
+
+    <div id="controls-and-guesses-container">
+        <div id="game-controls">
+            <input type="text" id="guess-input" placeholder="Digite o nome de um município...">
+            <button id="guess-button">Adivinhar!</button>
+           <!--  <button id="new-game-button">Novo Jogo</button> -->
+        </div>
+
+        <div id="guesses-area">
+            <h3>Tentativas:</h3>
+            <ul id="guesses-list">
+                </ul>
+        </div>
+    </div>
+
+   
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    <script src="territorio.js"></script>
+    <script src="jogo.js"></script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+/* estilos.css - Versão Atualizada */
+
+/* Estilos Globais */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    min-height: 100vh;
+    background-color: #f0f4f8;
+    color: #333;
+    padding-top: 20px;
+    box-sizing: border-box;
+}
+
+/* Cabeçalho e Título */
+h1 {
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-size: 2.5em;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Contenedor do Mapa */
+#map {
+    width: 85%;
+    max-width: 900px; /* Mantido, mas o contêiner abaixo pode ser mais largo */
+    height: 500px;
+    margin-bottom: 25px;
+    border: 2px solid #a9cce3;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Novo Layout para Controles e Lista de Tentativas --- */
+#controls-and-guesses-container {
+    display: flex;
+    flex-direction: row; /* Lado a lado */
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 85%;
+    max-width: 1000px; /* Aumentado para acomodar o layout lado a lado */
+    gap: 25px; /* Espaço entre as duas colunas */
+    margin: 0 auto 30px auto; /* Centraliza e adiciona margem inferior */
+}
+
+/* Controles do Jogo (Input e Botões) - Coluna da Esquerda */
+#game-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    
+    flex: 1 1 38%; /* Ajuste a proporção conforme necessário (ex: 38% para esta coluna) */
+    width: auto; /* Deixa o flex controlar */
+    max-width: none; /* Remove max-width anterior */
+    margin-bottom: 0; /* Removido, pois o gap do pai controla */
+}
+
+#guess-input {
+    padding: 12px 15px;
+    font-size: 1em;
+    width: 100%; /* Ocupa a largura do #game-controls */
+    max-width: 300px; /* Mantém um limite razoável para o input */
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+#guess-input:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+button {
+    padding: 12px 25px;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    min-width: 150px;
+}
+
+button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(0px);
+}
+
+#guess-button {
+    background-color: #FEC75F;
+    color: white;
+}
+
+#guess-button:hover {
+    background-color: #27ae60;
+}
+
+#new-game-button {
+    background-color: #3498db;
+    color: white;
+}
+
+#new-game-button:hover {
+    background-color: #2980b9;
+}
+
+/* Área da Lista de Tentativas (Título + Lista) - Coluna da Direita */
+#guesses-area {
+    flex: 1 1 58%; /* Ajuste a proporção conforme necessário (ex: 58% para esta coluna) */
+    display: flex;
+    flex-direction: column;
+    /* Os estilos de caixa como background, border-radius, podem vir de #guesses-list abaixo */
+}
+
+#guesses-area h3 { /* Título "Tentativas:" */
+    color: #2c3e50;
+    margin-top: 0; /* Remove margem do topo, pois está dentro de #guesses-area */
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Lista de Tentativas em si (com as "tags" e rolagem) */
+#guesses-list {
+    list-style-type: none;
+    padding: 10px;
+    width: 100%; /* Ocupa toda a largura de #guesses-area */
+    margin-bottom: 0; /* Removido, pois o gap do pai maior controla */
+    background-color: #e9ecef;
+    border-radius: 8px;
+    box-shadow: inset 0 1px 4px rgba(0,0,0,0.08);
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    max-height: 220px; /* Altura máxima antes da rolagem */
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#guesses-list li {
+    padding: 8px 15px;
+    border-radius: 20px; /* "Tags" ou "Pílulas" */
+    font-size: 0.9em;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    line-height: 1.4;
+    text-align: center;
+    /* Cor de fundo e texto são definidas pelo JavaScript */
+}
+
+#guesses-list li b {
+    color: inherit; /* Garante que o <b> herde a cor definida no <li> */
+}
+
+
+/* Ajustes de Responsividade */
+@media (max-width: 800px) { /* Ponto de quebra para o layout lado a lado */
+    #controls-and-guesses-container {
+        flex-direction: column; /* Empilha as colunas */
+        align-items: center;
+        width: 90%; /* Ajusta a largura do contêiner principal */
+        gap: 0; /* Remove o gap lateral, pois agora é vertical */
+    }
+
+    #game-controls,
+    #guesses-area {
+        flex-basis: auto; /* Reseta o flex-basis */
+        width: 100%;     /* Cada seção ocupa a largura total do contêiner pai quando empilhada */
+        /* max-width: 500px;  Opcional: definir um max-width para as seções empilhadas */
+    }
+
+    #game-controls {
+        margin-bottom: 20px; /* Adiciona espaço abaixo dos controles quando empilhado */
+    }
+
+    /* Outros ajustes de responsividade que já tínhamos */
+    h1 {
+        font-size: 2em;
+    }
+
+    #map {
+        width: 95%;
+        height: 400px;
+    }
+
+    #guess-input {
+        font-size: 0.95em;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 0.95em;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8em;
+    }
+
+    #map {
+        height: 350px;
+    }
+
+    #game-controls { /* Aqui #game-controls ainda está dentro de #controls-and-guesses-container */
+        padding: 15px;
+    }
+    
+    #guess-input, button {
+        font-size: 0.9em;
+    }
+
+    #guesses-list {
+        max-height: 180px; /* Altura um pouco menor para a lista de tentativas em telas muito pequenas */
+    }
+
+    #guesses-list li {
+        font-size: 0.85em; /* Fonte menor para as tags */
+        padding: 6px 10px;
+    }
+}
