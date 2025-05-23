@@ -18,12 +18,13 @@ let indiceSugestaoAtiva = -1;
 const GEOJSON_MUNICIPIOS_RS = './municipios.geojson';
 const NOME_PROPRIEDADE_MUNICIPIO = 'NOME';
 const PROXIMITY_COLORS = [
-    { limit: 0, color: '#00FF00', label: 'Correto!' },
-    { limit: 25000, color: '#FFFF00', label: 'Muito perto!' },
+    { limit: 0, color: '#00FF00', label: 'Bem certinho!' },
+    { limit: 25000, color: '#FFFF00', label: 'Tri perto!' },
     { limit: 50000, color: '#FFBF00', label: 'Perto' },
-    { limit: 100000, color: '#FF7F00', label: 'Meio longe 🫣' },
+    { limit: 100000, color: '#FF7F00', label: 'Naquelas.' },
     { limit: 200000, color: '#FF4000', label: 'Longe' },
-    { limit: Infinity, color: '#FF0000', label: 'Muito Longe!' }
+    { limit: 300000, color: '#FF0000', label: 'Muito longe!' },
+    { limit: Infinity, color: '#000000', label: 'Bah, tri longe!' }
 ];
 
 // Funções Utilitárias
@@ -58,7 +59,7 @@ function gerarTextoCompartilhavel() {
     const dataDeHoje = new Date();
     const diaFormatado = dataDeHoje.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
     const nomeDoJogo = "alegretle";
-    let texto = `Correto! \n${nomeDoJogo} (${diaFormatado})\n`;
+    let texto = `Bem certinho! \n${nomeDoJogo} (${diaFormatado})\n`;
     texto += `- Resultado em ${guessedMunicipalities.length} tentativa(s):\n\n`;
     const emojiMap = {
         [PROXIMITY_COLORS[0].color]: '🟩',
@@ -66,7 +67,8 @@ function gerarTextoCompartilhavel() {
         [PROXIMITY_COLORS[2].color]: '🟨',
         [PROXIMITY_COLORS[3].color]: '🟧',
         [PROXIMITY_COLORS[4].color]: '🟥',
-        [PROXIMITY_COLORS[5].color]: '🟫'
+        [PROXIMITY_COLORS[5].color]: '🟫',
+        [PROXIMITY_COLORS[6].color]: '⬛'
     };
     guessedMunicipalities.forEach(guess => {
         const corFeedback = guess.feedback.color;
@@ -187,11 +189,16 @@ function handleAutocompleteInput(event) {
     console.log("[AC_DIAG] Filtrados (norm):", filteredNormalisedNames);
 
     if (filteredNormalisedNames.length > 0) {
-        const suggestionsToDisplay = filteredNormalisedNames.map(nomeNormalizado => {
+        // MODIFICAÇÃO AQUI: Use 'let' para permitir a reatribuição após a ordenação
+        let suggestionsToDisplay = filteredNormalisedNames.map(nomeNormalizado => {
             const layer = municipalityFeaturesMap[nomeNormalizado];
             return (layer && layer.feature && layer.feature.properties) ? layer.feature.properties[NOME_PROPRIEDADE_MUNICIPIO] : null;
         }).filter(nome => nome !== null);
-        console.log("[AC_DIAG] Sugestões para display (orig):", suggestionsToDisplay);
+        
+        // NOVA LINHA: Ordena a lista de sugestões alfabeticamente
+        suggestionsToDisplay.sort((a, b) => a.localeCompare(b));
+        
+        console.log("[AC_DIAG] Sugestões para display (orig ordenadas):", suggestionsToDisplay); // Log modificado para clareza
         currentAutocompleteSuggestions = suggestionsToDisplay; // IMPORTANTE: currentAutocompleteSuggestions é atualizado aqui
         displaySuggestions(suggestionsToDisplay, inputText);
     } else { 
